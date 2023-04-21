@@ -1,5 +1,5 @@
 const TelegramBot = require('node-telegram-bot-api')
-const debug = require('/helpers')
+const debug = require('./helpers')
 const TOKEN = '6040246133:AAHtkZgSy1cROfvbzDvNknwYc4lbqSXOAX8'
 console.log('Bot has been started ...')
 const bot = new TelegramBot(TOKEN, {
@@ -12,7 +12,32 @@ const bot = new TelegramBot(TOKEN, {
         }
     }
 })
-bot.on('message', msg => {
+bot.onText(/\/start/, msg => {
+    const { id } = msg.chat
+    bot.sendMessage(id, debug(msg))
+})
+bot.onText(/\/help (.+)/, (msg, arr) => {
+    const { id } = msg.chat
+    bot.sendMessage(id, debug(arr))
+})
+/*bot.onText(/\/start/, msg =>{
+    const { id } = msg.chat
+    bot.sendMessage(id, debug(msg))
+})
+bot.onText(/\/help/ (.+)/, (msg,arr) =>{
+    const { id } = msg.chat
+    bot.sendMessage(id, debug(arr[1]))
+})
+
+bot.onText(/\/help/ (.+)/, (msg,[source,match]) =>{
+    const { id } = msg.chat
+    bot.sendMessage(id, debug(match))
+})
+bot.on(`message`, msg =>{
+    bot.sendMessage(msg.chat.id, 'Message!')
+}) */
+
+/*bot.on('message', msg => {
     console.log(msg)
     const { id } = msg.chat
 
@@ -32,4 +57,4 @@ bot.on('message', msg => {
 
     // bot.sendMessage(id,JSON.stringify())
     // bot.sendMessage(msg.chat.id,"Привіт!!!!!!!!! " + " " + msg.from.first_name + " " + msg.from.last_name)
-})
+}) */
